@@ -1,9 +1,3 @@
 class Task < ApplicationRecord
-    def change
-        create_table :messages do |t|
-            t.string :content
-
-            t.timestamps
-        end
-    end
+    validates :status, presence: true, length: {maximum: 10}
 end
