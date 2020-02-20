@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-    before_action :require_user_logged_in, only: [:show]
+    before_action :require_user_logged_in
     before_action :correct_user, only: [:show, :edit, :update, :destroy]
     
     def index
@@ -12,7 +12,7 @@ class TasksController < ApplicationController
     end
     
     def show
-        
+        @task = Task.find_by(id: params[:id])
     end
     
     def new
@@ -33,10 +33,11 @@ class TasksController < ApplicationController
     end
     
     def edit
-    
+        @task = Task.find_by(id: params[:id])
     end
     
     def update
+        @task = current_user.tasks.find_by(id: params[:id])
         if @task.update(task_params)
             flash[:success] = "更新成功"
             redirect_to root_url
