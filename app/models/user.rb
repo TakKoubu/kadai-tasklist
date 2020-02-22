@@ -5,9 +5,25 @@ class User < ApplicationRecord
     format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i },
     uniqueness: { case_sensitive: false }
     has_secure_password
+    
     has_many :tasks
     has_many :relationships
-    has_many :favoritings, through: :relationships, source: :favorite
-    has_many :reverses_of_relationship, class_name: "Relationship", foreign_key: "favorite_id"
-    has_many :favoriteds, through: :relationships, source: :user
+    has_many :likings, through: :relationships, source: :like
+    has_many :reverses_of_relationship, class_name: "Relationship", foreign_key: "like_id"
+    has_many :likeds, through: :relationships, source: :user
+    
+    def like(other_user)
+        unless self == other_user
+            self.relationships.find_or_create_by(like_id: other_user.id)
+        end
+    end
+    
+    def unlike
+        relationship = self.relationships.find_by(like_id: other_user.id)
+        relationship.destroy if relationship
+    end
+    
+    def liking?(other_user)
+        self.likings.include?(other_user)
+    end
 end
