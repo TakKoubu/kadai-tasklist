@@ -6,8 +6,24 @@ class User < ApplicationRecord
     uniqueness: { case_sensitive: false }
     has_secure_password
     has_many :tasks
+    
     has_many :relationships
-    has_many :favoritings, through: :relationships, source: :favorite
-    has_many :reverses_of_relationship, class_name: "Relationship", foreign_key: "favorite_id"
-    has_many :favoriteds, through: :relationships, source: :user
+    has_many :likings, through: :relationships, source: :like
+    has_many :reverses_of_relationship, class_name: "Relationship", foreign_key: "like_id"
+    has_many :subjects, through: :reverses_of_relationship, source: :user
+    
+    def like(other_task)
+        unless self == other_task
+            self.relationships.find_or_create_by(like_id: other_task.id)
+        end
+    end
+    
+    def unlike(other_task)
+        relationship = self.relationships.find_by(like_id: other_task.id)
+        relationship.destroy if relationship
+    end
+    
+    def liking?(other_task)
+        self.likings.include?(other_task)
+    end    
 end
