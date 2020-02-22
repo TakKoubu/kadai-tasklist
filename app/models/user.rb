@@ -8,7 +8,7 @@ class User < ApplicationRecord
     has_many :tasks
     
     has_many :relationships
-    has_many :likings, through: :relationships, source: :like
+    has_many :likes, through: :relationships, source: :like
     has_many :reverses_of_relationship, class_name: "Relationship", foreign_key: "like_id"
     has_many :subjects, through: :reverses_of_relationship, source: :user
     
@@ -24,6 +24,6 @@ class User < ApplicationRecord
     end
     
     def liking?(other_task)
-        self.likings.include?(other_task)
+        self.likes.include?(other_task)
     end    
 end

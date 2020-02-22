@@ -6,3 +6,5 @@
 <%= link_to "一覧に戻る", tasks_path %>
 <%= link_to "このタスクを編集", edit_task_path(@task) %>
 <%= link_to "このタスクを削除", @task, method: :delete, data: { confirm: '削除しますか？' } %>
+<%= link_to "お気に入り一覧へ移動する", user_path(@user) %>
+<%= render 'relationships/like', task: @task %>
