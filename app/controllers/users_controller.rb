@@ -3,7 +3,11 @@ class UsersController < ApplicationController
   def new
     @user = User.new
   end
-
+  
+  def show
+    @users = User.all 
+  end
+  
   def create
     @user = User.new(user_params)
     if @user.save
@@ -13,6 +17,11 @@ class UsersController < ApplicationController
       flash[:danger] = "登録に失敗しました"
       render :new
     end
+  end
+  
+  def likes
+    @user = User.find_by(id: params[:id])
+    @tasks = @user.feed_tasks.order(id: :asc).page(params[:page])
   end
   
   private

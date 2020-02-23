@@ -39,7 +39,8 @@ ActiveRecord::Schema.define(version: 2020_02_22_044053) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "relationships", "tasks", column: "like_id"
   add_foreign_key "relationships", "users"
-  add_foreign_key "relationships", "users", column: "like_id"
+
   add_foreign_key "tasks", "users"
 end

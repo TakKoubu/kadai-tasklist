@@ -1,0 +1,9 @@
+<h1>みんなのお気に入り一覧</h1>
+
+<ul>
+    <% @users.each do |user| %>
+        <li><%= link_to user.name, likes_user_path(user) %></li>
+    <% end %>
+</ul>
+
+<%= link_to "タスク新規作成", new_task_path %>
