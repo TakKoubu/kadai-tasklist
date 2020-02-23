@@ -26,4 +26,12 @@ class User < ApplicationRecord
     def liking?(other_task)
         self.likes.include?(other_task)
     end    
+    
+    def feed_tasks
+        Task.where(id: self.like_ids)
+    end
+    
+    def feed_tasks_everyone
+        Task.where(id: self.like_ids)
+    end
 end

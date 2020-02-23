@@ -18,5 +18,5 @@ Rails.application.routes.draw do
   end
   
   resources :tasks
-  resources :relationships, only: [:index, :create, :destroy]
+  resources :relationships, only: [:create, :destroy]
 end
